@@ -2,4 +2,6 @@ pandas
 sklearn
 jupyterlab
 matplotlib
-
+h5py
+tensorflow
+bottle
