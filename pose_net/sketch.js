@@ -31,6 +31,11 @@ var net;
 
 var keypoints = [];
 
+// tone-player
+
+var player;
+var isPlaying = false;
+
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 function estimatePoses() {
@@ -40,7 +45,7 @@ function estimatePoses() {
     .then(async function (pose) {
       // store the keypoints from the pose to draw it below
       keypoints = pose.keypoints;
-    
+
       var poseJSON = JSON.stringify(keypoints);
       console.log("poseJSON: ", poseJSON);
       // next animation loop, call posenet again to estimate poses
@@ -74,6 +79,32 @@ function setup() {
         estimatePoses();
       });
     });
+  };
+
+  // FOR YMCA SONG
+
+  // setup our player with an audio file
+  player = new Tone.Player("Y.M.C.A._BitRate.mp3").toDestination();
+  player.loop = true;
+  player.autostart = false;
+
+  // start click hander
+  document.getElementById("start-stop").onclick = () => {
+    if (player && player.loaded) {
+      if (isPlaying) {
+        // we weren't playing, so we'll start
+        isPlaying = !isPlaying;
+        player.start();
+        document.getElementById("start-stop").innerHTML = "STOP";
+        document.getElementById("playingYMCA").style.display = "block";
+      } else {
+        // we were playing, so we'll stop
+        isPlaying = !isPlaying;
+        player.stop();
+        document.getElementById("start-stop").innerHTML = "START";
+        document.getElementById("playingYMCA").style.display = "none";
+      }
+    }
   };
 }
 
