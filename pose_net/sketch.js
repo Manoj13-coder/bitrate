@@ -84,7 +84,7 @@ function setup() {
   // FOR YMCA SONG
 
   // setup our player with an audio file
-  player = new Tone.Player("Y.M.C.A._BitRate.mp3").toDestination();
+  player = new Tone.Player("YMCA.m4a").toDestination();
   player.loop = true;
   player.autostart = false;
 
