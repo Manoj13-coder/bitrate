@@ -63,6 +63,7 @@ function evaluateResults() {
   // if more than 80% are positive, return. 
   var percentage = (positiveResults / countResults);
   var shouldPlay =  percentage > 0.8;
+  console.log("positiveResults:" + countResults);
   console.log("countResults:" + countResults);
   console.log("Percentage:" + percentage);
   console.log("Should Play:" + shouldPlay);

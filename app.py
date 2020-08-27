@@ -1,13 +1,17 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
+
 from joblib import load
 import pandas as pd
 
+
 app = Flask(__name__)
 cors = CORS(app, resources={r"/poses/*": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
-@app.route('/poses', methods=['POST'])
+@app.route('/poses', methods=['POST','OPTIONS'])
+@cross_origin(origin='*',headers=['Content-Type','Authorization'])
 def poses():
     req = request.json
     data = req['value']
@@ -31,11 +35,8 @@ def poses():
 
     df = df.append(df_aux, ignore_index=True)
     result = clf.predict(df.values).sum()
-    print(result)
-    return jsonify({'result': str(result)})
-    #return "{'result':" + str(result) + "}"
+    return jsonify({'result': bool(result>0)})
+ 
 
 if __name__ == '__main__':
-    #app.run(ssl_context='adhoc', host='0.0.0.0', debug=True, port=5000)
-    #app.run(ssl_context=('cert.pem', 'key.pem'),  host='0.0.0.0', debug=True, port=5000)
-    app.run(host='0.0.0.0', debug=True, port=5000)
+     app.run(host='0.0.0.0', debug=True, port=5000)
