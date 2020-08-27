@@ -1,7 +1,10 @@
 pandas
+tensorflow
+Flask
+flask-cors
+joblib
 sklearn
 jupyterlab
 matplotlib
 h5py
-tensorflow
-bottle
+
