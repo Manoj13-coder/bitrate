@@ -144,7 +144,7 @@ function setup() {
 
   capture.elt.onloadeddata = () => {
     // setup our player with an audio file
-    player = new Tone.Player("YMCA.m4a").toDestination();
+    player = new Tone.Player("https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview128/v4/0e/10/2d/0e102dc5-f22b-2dbb-c4a3-2690a559bd21/mzaf_6636550671412085201.plus.aac.p.m4a").toDestination();
     player.loop = true;
     player.autostart = false;
 
