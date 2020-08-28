@@ -1,0 +1,15 @@
+# Use Magenta to generate music
+
+1. docker pull tensorflow/magenta
+2. docker run -it -p 6006:6006 -v magenta:/magenta-data tensorflow/magenta
+3. curl https://bitbucket.org/phiprimed/amwpblog/raw/master/magenta_music_gen/setup.sh > setup.sh
+4. melody_rnn_generate --config=attention_rnn \
+--bundle_file=/magenta-models/lookback_rnn.mag  \
+--output_dir=/magenta-data/music-output/ \
+'--hparams=batch_size=128,rnn_layer_sizes=[128,128]' \
+--num_outputs=1 --num_steps=128 \
+--primer_melody="[64, -2, 64, -2, 65, -2, 67, -2, 67, -2, 65, -2, 64, -2, 62, -2, 60, -2, 60, -2, 62, -2, 64, -2, 64, -2, 62, -2, 62, -2, -2]"
+
+5. docker ps (get the docker_id)
+5. docker cp $docker_id: /magenta-data/music-output/*.midi . 
+

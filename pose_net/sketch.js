@@ -26,12 +26,89 @@ var minPartConfidence = 0.3;
 // if the pose results should be flipped horizontally. Useful for webcam videos.
 var flipHorizontal = false;
 
+var categorizationResults = [];
+// var serverUrl = 'https://private-8f2aa8-bitrate.apiary-mock.com/poses'
+var serverUrl = "http://127.0.0.1:5000/poses";
+
+var player;
+var playing = false;
+
 var capture;
 var net;
 
 var keypoints = [];
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+function stopMusic() {
+  playing = false;
+  player.stop();
+  console.log("Stop Playing");
+}
+function startMusic() {
+  playing = true;
+  player.start();
+  console.log("Start Playing");
+}
+
+function evaluateResults() {
+  // Check the last 10 poses and return positive if 80% of them are positive.
+  var countResults = categorizationResults.length;
+  if (countResults < 8) {
+    console.log("Sample too small");
+    return false;
+  }
+
+  // count number of positives
+  const positiveResults = categorizationResults.filter((category) => category)
+    .length;
+
+  // if more than 80% are positive, return.
+  var percentage = positiveResults / countResults;
+  var shouldPlay = percentage > 0.8;
+  console.log("positiveResults:" + countResults);
+  console.log("countResults:" + countResults);
+  console.log("Percentage:" + percentage);
+  console.log("Should Play:" + shouldPlay);
+  if (playing && !shouldPlay) stopMusic();
+  else if (!playing && shouldPlay) startMusic();
+}
+
+function sendToServer(pose, callback) {
+  // Ajax request to receive either true or false
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", serverUrl, true);
+  xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+  poseJSON = JSON.stringify({
+    value: pose,
+  });
+
+  xhr.onload = function () {
+    if (this.readyState === 4)
+      if (this.status === 200) {
+        console.log("Server OK");
+        callback.apply(xhr, pose);
+        // we get the returned data
+      } else {
+        console.log("Server Error");
+        console.log(xhr.statusText);
+      }
+  };
+  xhr.responseType = "json";
+
+  xhr.send(poseJSON);
+}
+
+function updatePoseArray(keypoints) {
+  console.log(this.response);
+  categorizationResults.push(this.response.result);
+  if (categorizationResults.length > 10) {
+    categorizationResults.shift();
+    console.log("Trimming results");
+  }
+
+  evaluateResults();
+}
 
 function estimatePoses() {
   // call posenet to estimate a pose
@@ -40,12 +117,12 @@ function estimatePoses() {
     .then(async function (pose) {
       // store the keypoints from the pose to draw it below
       keypoints = pose.keypoints;
-    
-      var poseJSON = JSON.stringify(keypoints);
-      console.log("poseJSON: ", poseJSON);
+      sendToServer(keypoints, updatePoseArray);
+
+      // console.log("poseJSON: ", poseJSON);
       // next animation loop, call posenet again to estimate poses
 
-      await delay(10000);
+      await delay(1000);
 
       requestAnimationFrame(function () {
         estimatePoses();
@@ -66,6 +143,11 @@ function setup() {
   capture.hide();
 
   capture.elt.onloadeddata = () => {
+    // setup our player with an audio file
+    player = new Tone.Player("https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview128/v4/0e/10/2d/0e102dc5-f22b-2dbb-c4a3-2690a559bd21/mzaf_6636550671412085201.plus.aac.p.m4a").toDestination();
+    player.loop = true;
+    player.autostart = false;
+
     // load posenet by downloading the weights for the model.
     posenet.load(posenetLoadParams).then(function (loadedNet) {
       net = loadedNet;
