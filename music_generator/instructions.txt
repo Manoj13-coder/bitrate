@@ -1,5 +1,7 @@
 # Use Magenta to generate music
 
+Reference: https://amukherjeeworld.wordpress.com/2017/09/02/generating-music-with-magenta-ai-software-part-2/
+
 1. docker pull tensorflow/magenta
 2. docker run -it -p 6006:6006 -v magenta:/magenta-data tensorflow/magenta
 3. curl https://bitbucket.org/phiprimed/amwpblog/raw/master/magenta_music_gen/setup.sh > setup.sh
