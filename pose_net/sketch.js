@@ -32,6 +32,7 @@ var serverUrl = "http://127.0.0.1:5000/poses";
 
 var player;
 var playing = false;
+var random_music = false;
 
 var capture;
 var net;
@@ -40,13 +41,18 @@ var keypoints = [];
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-function stopMusic() {
-  playing = false;
+function startRandomMusic() {
   player.stop();
-  console.log("Stop Playing");
+  if (random_music) player2.stop();
+  player2 = new Tone.Player("http://0.0.0.0:8081/music/generate?track_name=output.mp3").toDestination();
+  player2.loop = true;
+  player2.autostart = true;
+  random_music = true;
+  console.log("Start Random Music");
 }
 function startMusic() {
   playing = true;
+  player2.stop();
   player.start();
   console.log("Start Playing");
 }
@@ -70,8 +76,8 @@ function evaluateResults() {
   console.log("countResults:" + countResults);
   console.log("Percentage:" + percentage);
   console.log("Should Play:" + shouldPlay);
-  if (playing && !shouldPlay) stopMusic();
-  else if (!playing && shouldPlay) startMusic();
+  if (!shouldPlay) startRandomMusic();
+  if (!playing && shouldPlay) startMusic();
 }
 
 function sendToServer(pose, callback) {

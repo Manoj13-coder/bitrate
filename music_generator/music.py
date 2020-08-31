@@ -13,7 +13,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @cross_origin(origin='*',headers=['Content-Type','Authorization'])
 def generate():
     trackname = request.args.get('track_name')
-
     primer_melody = random.sample(range(0, 127), 4)
     command = os.popen("melody_rnn_generate --config=attention_rnn \
         --bundle_file=/magenta-models/lookback_rnn.mag  \
