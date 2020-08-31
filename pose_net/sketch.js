@@ -42,7 +42,10 @@ var keypoints = [];
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 function startRandomMusic() {
-  player.stop();
+  if (playing) {
+    player.stop();
+    playing = false;
+  }
   if (random_music) player2.stop();
   player2 = new Tone.Player("http://0.0.0.0:8081/music/generate?track_name=output.mp3").toDestination();
   player2.loop = true;
@@ -52,7 +55,10 @@ function startRandomMusic() {
 }
 function startMusic() {
   playing = true;
-  player2.stop();
+  if (random_music) {
+    player2.stop();
+    random_music = false;
+  }
   player.start();
   console.log("Start Playing");
 }
@@ -76,6 +82,7 @@ function evaluateResults() {
   console.log("countResults:" + countResults);
   console.log("Percentage:" + percentage);
   console.log("Should Play:" + shouldPlay);
+  console.log("Is playing:" + playing);
   if (!shouldPlay) startRandomMusic();
   if (!playing && shouldPlay) startMusic();
 }
