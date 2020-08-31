@@ -49,8 +49,8 @@ Then, run the server:
 
 ## TBD 
 1. Improve web page desing
-2. Improve Classifier's accuracy by adding more data and tunning the model. Since it has been trained only in data from people of the group. In order to be more accurate we would need to add more data from different people with different shapes of the body and sizes. In addition, people might do differently the poses for the same song. So, we probably will have overfitting if the model is being tested with other people.     
-3. Add support for more songs: train other classifiers to identify which song is being dancing.     
+2. Improve Classifier's accuracy by adding more data and tunning the model, since it has been trained only in data from people of the group. In order to be more accurate we would need to add more data from different people with different shapes of the body and sizes. In addition, people might do differently the poses for the same song. So, we probably will have overfitting if the model is being tested with other people.     
+3. Add support for more songs: train other classifiers to identify which song is being danced.     
 4. In the future it would be good to be able to create dynamically support for new songs, training the model with data. For this feature several steps are needed:     
 - Have a view to capture poses for a certain song  
 - The system would need to train the model with the data generated     
