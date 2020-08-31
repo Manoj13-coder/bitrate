@@ -36,7 +36,7 @@ Then, run the server:
 
 ## Docker 
 ```bash
-	docker run -d -p 8080:6000 mikaelapisani/bitrate-generate:latest
+	docker run -d -p 8081:6000 mikaelapisani/bitrate-generate:latest
 ```
 
 
