@@ -31,7 +31,12 @@ Then, run the server:
 
 ## Docker 
 ```bash
-	docker run -d -p 5000:5000 classifier-server 
+	docker run -d -p 5000:5000 mikaelapisani/bitrate-classify:latest
+```
+
+## Docker 
+```bash
+	docker run -d -p 8080:6000 mikaelapisani/bitrate-generate:latest
 ```
 
 
