@@ -2,32 +2,17 @@ var width = 800;
 var height = 800;
 var videoSize = 800;
 
-// the size of the neural network model to load. Must be 0.50, 0.75, 1.00, or 1.01
-// The higher the number, the larger the model and the more accurate it is, but
-// the slower the speed.
 var modelSize = 0.75;
 var posenetLoadParams = {
-  //architecture: 'MobileNetV1',
-  //outputStride: 16,
-  //inputResolution: 513,
   multiplier: 0.75,
 };
 
-// A number between 0.2 and 1.0. How much posenet should scale the image by before feeding
-// it through the network.  Set this number lower to scale down the image and increase
-// the speed at the cost of accuracy.
 var imageScaleFactor = 0.75;
-
-// the minimum score of keypoints from posenet to show.
-// Should be between 0.0 and 1.0. Use this to filter out
-// lower accuracy parts
 var minPartConfidence = 0.3;
-
-// if the pose results should be flipped horizontally. Useful for webcam videos.
 var flipHorizontal = false;
 
 var categorizationResults = [];
-// var serverUrl = 'https://private-8f2aa8-bitrate.apiary-mock.com/poses'
+// var serverUrl = 'https://private-8f2aa8-bitrate.apiary-mock.com/poses' // use this as a mock that always classifies as true.
 var serverUrl = "http://127.0.0.1:5000/poses";
 
 var player;
@@ -64,7 +49,7 @@ function startMusic() {
 }
 
 function evaluateResults() {
-  // Check the last 10 poses and return positive if 80% of them are positive.
+  // Check the last 8 poses and return positive if 80% of them are positive.
   var countResults = categorizationResults.length;
   if (countResults < 8) {
     console.log("Sample too small");
@@ -132,7 +117,7 @@ function estimatePoses() {
       keypoints = pose.keypoints;
       sendToServer(keypoints, updatePoseArray);
 
-      // console.log("poseJSON: ", poseJSON);
+      // console.log("poseJSON: ", poseJSON); // uncomment this if you want to see your pose value
       // next animation loop, call posenet again to estimate poses
 
       await delay(1000);
@@ -188,15 +173,14 @@ function draw() {
         i == posenet.partIds["rightWrist"]
       )
         fill(255, 0, 0);
-      // all other parts are yello
+      // all other parts are yellow
       else fill(255, 255, 0);
 
       ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
     }
   }
 
-  // get skeleton, filtering out parts wtihout
-  // a high enough confidence level
+  // get skeleton, filtering out parts without a high enough confidence level
   if (keypoints.length > 0) {
     stroke(255, 255, 0);
     var skeleton = posenet.getAdjacentKeyPoints(keypoints, minPartConfidence);
