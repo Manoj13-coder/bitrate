@@ -1,0 +1,80 @@
+{
+	"info": {
+		"_postman_id": "af3126e5-224c-4fdd-b4c6-362710b94757",
+		"name": "bitrate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://0.0.0.0:5000/poses",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept-encoding": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"value\": [{\"score\": 0.997421383857727, \"part\": \"nose\", \"position\": {\"x\": 487.2841207897617, \"y\": 648.0917132782101}}, {\"score\": 0.9983171224594116, \"part\": \"leftEye\", \"position\": {\"x\": 576.5800743251459, \"y\": 546.7680341074903}}, {\"score\": 0.9986899495124817, \"part\": \"rightEye\", \"position\": {\"x\": 432.87761999939204, \"y\": 563.1123464858949}}, {\"score\": 0.9905219078063965, \"part\": \"leftEar\", \"position\": {\"x\": 703.1950123115272, \"y\": 564.5699230149562}}, {\"score\": 0.2236092984676361, \"part\": \"rightEar\", \"position\": {\"x\": 378.8441223857004, \"y\": 580.0926594418775}}, {\"score\": 0.31892937421798706, \"part\": \"leftShoulder\", \"position\": {\"x\": 811.0293614725194, \"y\": 777.3477398467899}}, {\"score\": 0.34523260593414307, \"part\": \"rightShoulder\", \"position\": {\"x\": 372.6308147267145, \"y\": 772.5275299428502}}, {\"score\": 0.02681531012058258, \"part\": \"leftElbow\", \"position\": {\"x\": 768.6615108979815, \"y\": 817.3684680508269}}, {\"score\": 0.03925187885761261, \"part\": \"rightElbow\", \"position\": {\"x\": 337.2188345467534, \"y\": 821.3529950449903}}, {\"score\": 0.8242220282554626, \"part\": \"leftWrist\", \"position\": {\"x\": 748.8886376763132, \"y\": 751.7319259940418}}, {\"score\": 0.1181134507060051, \"part\": \"rightWrist\", \"position\": {\"x\": 743.4216926070039, \"y\": 752.0533936496838}}, {\"score\": 0.016147010028362274, \"part\": \"leftHip\", \"position\": {\"x\": 656.7917166980789, \"y\": 775.2195365697958}}, {\"score\": 0.007319728843867779, \"part\": \"rightHip\", \"position\": {\"x\": 400.4001721333901, \"y\": 774.2830150322228}}, {\"score\": 0.014198613353073597, \"part\": \"leftKnee\", \"position\": {\"x\": 762.211733569431, \"y\": 789.906875075997}}, {\"score\": 0.0067172604613006115, \"part\": \"rightKnee\", \"position\": {\"x\": 385.6266956848857, \"y\": 759.7801594418775}}, {\"score\": 0.0060580079443752766, \"part\": \"leftAnkle\", \"position\": {\"x\": 710.893421692607, \"y\": 787.579321954037}}, {\"score\": 0.006273159757256508, \"part\": \"rightAnkle\", \"position\": {\"x\": 392.6841171799003, \"y\": 794.5366172938959}}]}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:5000/poses",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "5000",
+					"path": [
+						"poses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://0.0.0.0:8081/music/generate?track_name=output.mp3",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept-encoding": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8080/music/generate?track_name=output.mp3",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8080",
+					"path": [
+						"music",
+						"generate"
+					],
+					"query": [
+						{
+							"key": "track_name",
+							"value": "output.mp3"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
