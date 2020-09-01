@@ -2,49 +2,40 @@
 
 The main idea is that the web app detects which song are you dancing and starts playing it.
 The application detects poses that you dance and sends them to a server. The server classifies 
-each pose and determines if the pose belongs to the sequence for the song YMCA. 
+each pose and determines if the pose belongs to the sequence for some song, so it can detect you are dancing that specific song. 
 
-For the moment the application only supports the song YMCA. 
+For the moment the application only supports the song YMCA. [Here](link a youtube) you can find the prototype demo video.
 
-# UI
-Open the index.xml in a Chrome browser and allow the camera. 
+The system is dividen in these components: 
 
-# Classifier server
-The classifier is implemented in python applying a RandomForest model. Reaching an accuracy of 0.85.    
-You can find the code [ymca_classifier.ipynb](ymca_classifier.ipynb).    
+![components](https://user-images.githubusercontent.com/8755889/91780697-ad35dc80-ebce-11ea-9a05-fbf8d387897e.jpg)
 
+# FE
+This is the user interface to detect poses and play the song detected (in this case only YMCA or not YMCA). When is not YMCA, we play sound created with magenta. 
 
-## Run Locally
+When the camera detects a pose, is saved in a list of poses until 8 poses are reached. Afterwards, they are sent to the classifier that detects if those poses are from the YMCA song and if 80% of them are positive, the YMCA song starts playing. Otherwise, the music generator is called to generate a sound using magenta, that will be played. 
 
-First create a virtualenv and install dependencies:     
-```bash
-	cd classifier
-	virtualenv venv
-	source  venv/bin/activate
-	pip install -r requirements.txt
-```
+# Classifier server (YMCA Classifier)
+The classifier is implemented in python applying a `RandomForest` model from `sklearn` library, reaching an accuracy of 0.85. This is prepacked in a docker.   
+You can find the code [here](/classifier/ymca_classifier.ipynb).    
 
-Then, run the server:    
-```bash
-	python app.py
-```
+# Music Generator
+We use magenta to generate a sound using the `tensorFlow/magenta` docker image that contains different pre-trained models to be used. In particular, we use `lookback_rnn` model. We generate the `primer_melody` from random numbers between 0 and 127. You can find the code [here](/music_generator/music.py).    
 
-## Docker 
-```bash
-	docker run -d -p 5000:5000 mikaelapisani/bitrate-classify:latest
-```
-
-## Docker 
+# Steps to start dancing !!  
+- Run the server:
 ```bash
 	docker run -d -p 8081:6000 mikaelapisani/bitrate-generate:latest
 ```
+- Run the classifier: 
+```bash
+	docker run -d -p 5000:5000 mikaelapisani/bitrate-classify:latest
+```
+- Run FE: Open browser and open index.xml (allow camera if asked)
+- Start Dancing!
 
-
-# Start dancing !!  
-- Run the server
-- Open browser
-- Open index.xml
-- Allow camera 
+- If your poses are from the YMCA song, the song will start playing.
+- If your poses aren't from the YMCA song, you will listen to sounds created with magenta
 
 
 ## TBD 
@@ -56,7 +47,3 @@ Then, run the server:
 - The system would need to train the model with the data generated     
 - Once the model is trained it should be integrated in the server to classify poses against the new song    
   
-
-
-
-
