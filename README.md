@@ -4,7 +4,7 @@ The main idea is that the web app detects which song are you dancing and starts 
 The application detects poses that you dance and sends them to a server. The server classifies 
 each pose and determines if the pose belongs to the sequence for some song, so it can detect you are dancing that specific song. 
 
-For the moment the application only supports the song YMCA. [Here](link a youtube) you can find the prototype demo video.
+For the moment the application only supports the song YMCA. [Here](https://youtu.be/bJ9A6fuVumo) you can find the prototype demo video.
 
 The system is dividen in these components: 
 
