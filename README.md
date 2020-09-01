@@ -1,4 +1,4 @@
-# bitrate Dance-Song Detector
+# Bitrate Dance-Song Detector
 
 The main idea is that the web app detects which song are you dancing and starts playing it.
 The application detects poses that you dance and sends them to a server. The server classifies 
